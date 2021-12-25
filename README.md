@@ -6,10 +6,7 @@ A Twitch Helix API client written in Go (Golang).
 [![Coverage Status](https://coveralls.io/repos/github/nicklaw5/helix/badge.svg)](https://coveralls.io/github/nicklaw5/helix)
 [![Go Reference](https://pkg.go.dev/badge/github.com/nicklaw5/helix.svg)](https://pkg.go.dev/github.com/nicklaw5/helix)
 
-## Forked Repo:
 
-This repository is a fork of nicklaw5/helix. It has been further modified for Amazefulbot.  
-If you plan on using this repository, please check out the original version at https://github.com/nicklaw5/helix
 
 Twitch is always expanding and improving the available endpoints and features for the Helix API.
 The maintainers of this package will make a best effort approach to implementing new changes
@@ -17,6 +14,10 @@ as they are released by the Twitch team.
 
 See [here](SUPPORTED_ENDPOINTS.md) for a list of endpoints and features this package supports.
 
+## Forked Repo:
+
+This repository is a fork of nicklaw5/helix. It has been further modified for Amazefulbot.  
+If you plan on using this repository, please check out the original version at https://github.com/nicklaw5/helix
 ## Documentation & Examples
 
 All documentation and usage examples for this package can be found [here](docs/README.md).
