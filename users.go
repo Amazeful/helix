@@ -25,6 +25,11 @@ type UsersResponse struct {
 	Data ManyUsers
 }
 
+type UserResponse struct {
+	ResponseCommon
+	Data User
+}
+
 type UsersParams struct {
 	IDs    []string `query:"id"`    // Limit 100
 	Logins []string `query:"login"` // Limit 100
@@ -46,6 +51,19 @@ func (c *Client) GetUsers(params *UsersParams) (*UsersResponse, error) {
 	users.Data.Users = resp.Data.(*ManyUsers).Users
 
 	return users, nil
+}
+
+func (c *Client) GetMe() (*UserResponse, error) {
+	resp, err := c.get("/users", &ManyUsers{}, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	user := &UserResponse{}
+	resp.HydrateResponseCommon(&user.ResponseCommon)
+	user.Data = resp.Data.(*ManyUsers).Users[0]
+
+	return user, nil
 }
 
 type UpdateUserParams struct {

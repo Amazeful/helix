@@ -96,6 +96,41 @@ func TestGetUsers(t *testing.T) {
 	}
 }
 
+func TestGetMe(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		statusCode int
+		options    *Options
+		respBody   string
+		expectUser string
+	}{
+		{
+			http.StatusOK,
+			&Options{ClientID: "my-client-id", UserAccessToken: "my-access-token"},
+			`{"data":[{"id":"26301881","login":"sodapoppin","display_name":"sodapoppin","type":"","broadcaster_type":"partner","description":"Wtf do i write here? Click my stream, or i scream.","profile_image_url":"https://static-cdn.jtvnw.net/jtv_user_pictures/sodapoppin-profile_image-10049b6200f90c14-300x300.png","offline_image_url":"https://static-cdn.jtvnw.net/jtv_user_pictures/sodapoppin-channel_offline_image-2040c6fcacec48db-1920x1080.jpeg","view_count":190154823,"created_at":"2011-11-22T04:40:56.75883Z"}]}`,
+			"sodapoppin",
+		},
+	}
+
+	for _, testCase := range testCases {
+		c := newMockClient(testCase.options, newMockHandler(testCase.statusCode, testCase.respBody, nil))
+
+		resp, err := c.GetMe()
+		if err != nil {
+			t.Error(err)
+		}
+
+		if resp.StatusCode != testCase.statusCode {
+			t.Errorf("expected status code to be \"%d\", got \"%d\"", testCase.statusCode, resp.StatusCode)
+		}
+
+		if resp.Data.Login != testCase.expectUser { // sodapoppin
+			t.Errorf("expected username to be \"%s\", got \"%s\"", testCase.expectUser, resp.Data.Login)
+		}
+	}
+}
+
 func TestUpdateUser(t *testing.T) {
 	t.Parallel()
 
