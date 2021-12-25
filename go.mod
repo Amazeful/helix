@@ -1,4 +1,4 @@
-module github.com/nicklaw5/helix/v2
+module github.com/Amazeful/helix
 
 go 1.17
 

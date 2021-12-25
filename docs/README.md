@@ -1,5 +1,9 @@
 # Documentation
 
+## Forked Repo:
+
+This repository is a fork of nicklaw5/helix. It has been further modified for Amazefulbot.  
+If you plan on using this repository, please check out the original version at https://github.com/nicklaw5/helix
 ## Usage Examples
 
 Follow the links below to their respective API usage examples:
@@ -29,7 +33,7 @@ Follow the links below to their respective API usage examples:
 ## Getting Started
 
 ```shell
-go get -u github.com/nicklaw5/helix/v2
+go get -u github.com/Amazeful/helix
 ```
 
 main.go:
