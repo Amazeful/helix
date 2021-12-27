@@ -61,8 +61,10 @@ func (c *Client) GetMe() (*UserResponse, error) {
 
 	user := &UserResponse{}
 	resp.HydrateResponseCommon(&user.ResponseCommon)
-	user.Data = resp.Data.(*ManyUsers).Users[0]
-
+	users := resp.Data.(*ManyUsers).Users
+	if len(users) != 0 {
+		user.Data = users[0]
+	}
 	return user, nil
 }
 

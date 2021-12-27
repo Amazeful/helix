@@ -114,7 +114,10 @@ func (c *Client) GetChannelInformationById(broadcasterID string) (*GetChannelInf
 
 	channel := &GetChannelInformationResponse{}
 	resp.HydrateResponseCommon(&channel.ResponseCommon)
-	channel.Data = resp.Data.(*ManyChannelInformation).Channels[0]
+	channels := resp.Data.(*ManyChannelInformation).Channels
+	if len(channels) != 0 {
+		channel.Data = channels[0]
+	}
 
 	return channel, nil
 }
