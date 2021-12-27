@@ -65,9 +65,14 @@ type EditChannelInformationParams struct {
 	Delay               int    `json:"delay,omitempty"`
 }
 
-type GetChannelInformationResponse struct {
+type GetChannelsInformationResponse struct {
 	ResponseCommon
 	Data ManyChannelInformation
+}
+
+type GetChannelInformationResponse struct {
+	ResponseCommon
+	Data ChannelInformation
 }
 
 type EditChannelInformationResponse struct {
@@ -88,17 +93,30 @@ type ChannelInformation struct {
 	Delay               int    `json:"delay"`
 }
 
-func (c *Client) GetChannelInformation(params *GetChannelInformationParams) (*GetChannelInformationResponse, error) {
+func (c *Client) GetChannelInformation(params *GetChannelInformationParams) (*GetChannelsInformationResponse, error) {
 	resp, err := c.get("/channels", &ManyChannelInformation{}, params)
 	if err != nil {
 		return nil, err
 	}
 
-	channels := &GetChannelInformationResponse{}
+	channels := &GetChannelsInformationResponse{}
 	resp.HydrateResponseCommon(&channels.ResponseCommon)
 	channels.Data.Channels = resp.Data.(*ManyChannelInformation).Channels
 
 	return channels, nil
+}
+
+func (c *Client) GetChannelInformationById(broadcasterID string) (*GetChannelInformationResponse, error) {
+	resp, err := c.get("/channels", &ManyChannelInformation{}, &GetChannelInformationParams{BroadcasterID: broadcasterID})
+	if err != nil {
+		return nil, err
+	}
+
+	channel := &GetChannelInformationResponse{}
+	resp.HydrateResponseCommon(&channel.ResponseCommon)
+	channel.Data = resp.Data.(*ManyChannelInformation).Channels[0]
+
+	return channel, nil
 }
 
 func (c *Client) EditChannelInformation(params *EditChannelInformationParams) (*EditChannelInformationResponse, error) {

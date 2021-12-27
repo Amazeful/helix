@@ -209,7 +209,7 @@ func TestGetChannelInformation(t *testing.T) {
 	for _, testCase := range testCases {
 		c := newMockClient(testCase.options, newMockHandler(testCase.statusCode, testCase.respBody, nil))
 
-		var resp *GetChannelInformationResponse
+		var resp *GetChannelsInformationResponse
 		var err error
 		if testCase.BroadcasterID != "" {
 			resp, err = c.GetChannelInformation(&GetChannelInformationParams{
